@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SortSearchAndPagedSample.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,16 @@ namespace SortSearchAndPagedSample.Controllers
 {
     public class HomeController : Controller
     {
+        private SkillTreeHomewrok _db;
+
+        public HomeController()
+        {
+            _db = new SkillTreeHomewrok();
+        }
+
         public ActionResult Index()
         {
+            ViewData.Model = _db.AccountBook.ToList();
             return View();
         }
 
