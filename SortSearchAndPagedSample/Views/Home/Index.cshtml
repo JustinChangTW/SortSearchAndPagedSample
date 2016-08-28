@@ -1,4 +1,7 @@
-﻿@model IEnumerable<SortSearchAndPagedSample.Models.AccountBook>
+﻿@using PagedList
+@using PagedList.Mvc
+@*在model前要先using pageList&pageList.Mvc*@
+@model IEnumerable<SortSearchAndPagedSample.Models.AccountBook>
 
 @{
     ViewBag.Title = "Index";
@@ -9,7 +12,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table  table-bordered table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Categoryyy)
@@ -26,26 +29,35 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoryyy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amounttt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dateee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Remarkkk)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoryyy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amounttt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dateee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarkkk)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
+<nav>
+    @Html.PagedListPager((IPagedList)Model,
+    d => Url.Action("index",
+                    new
+                    {
+                        page=d
+                    }))
+</nav>
